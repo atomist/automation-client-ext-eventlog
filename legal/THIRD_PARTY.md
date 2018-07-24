@@ -1,6 +1,6 @@
-# @atomist/automation-client-ext-dashboard
+# @atomist/automation-client-ext-eventlog
 
-This page details all runtime OSS dependencies of `@atomist/automation-client-ext-dashboard`.
+This page details all runtime OSS dependencies of `@atomist/automation-client-ext-eventlog`.
 
 ## Licenses
 
@@ -8,24 +8,22 @@ This page details all runtime OSS dependencies of `@atomist/automation-client-ex
 
 | License | Count |
 |---------|-------|
-|Apache-2.0|2|
-|MIT|2|
+|[ISC](#isc)|1|
+|[MIT](#mit)|1|
 
-#### Apache-2.0
-Apache License 2.0 - [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+#### ISC
+ISC License - [https://www.isc.org/downloads/software-support-policy/isc-license/](https://www.isc.org/downloads/software-support-policy/isc-license/)
 
 | Name | Version | Publisher | Repository |
 |------|---------|-----------|------------|
-|`@atomist/automation-client-ext-dashboard`|`0.1.0`|Atomist, Inc.|[https://github.com/atomist/automation-client-ext-dashboard](https://github.com/atomist/automation-client-ext-dashboard)|
-|`@atomist/slack-messages`|`0.12.1`|Atomist|[https://github.com/atomist/slack-messages](https://github.com/atomist/slack-messages)|
+|`json-stringify-safe`|`5.0.1`|Isaac Z. Schlueter|[https://github.com/isaacs/json-stringify-safe](https://github.com/isaacs/json-stringify-safe)|
 
 #### MIT
 MIT License - [http://www.opensource.org/licenses/MIT](http://www.opensource.org/licenses/MIT)
 
 | Name | Version | Publisher | Repository |
 |------|---------|-----------|------------|
-|`deprecated-decorator`|`0.1.6`|vilicvane|[https://github.com/vilic/deprecated-decorator](https://github.com/vilic/deprecated-decorator)|
-|`lodash`|`4.17.10`|John-David Dalton|[https://github.com/lodash/lodash](https://github.com/lodash/lodash)|
+|`serialize-error`|`2.1.0`|Sindre Sorhus|[https://github.com/sindresorhus/serialize-error](https://github.com/sindresorhus/serialize-error)|
 
 ## Contact
 

@@ -1,0 +1,70 @@
+{
+  "name": "@atomist/automation-client-ext-eventlog",
+  "version": "0.1.0",
+  "description": "Extension for sending events into the AtomistLogs event stream",
+  "author": "Atomist, Inc.",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/atomist/automation-client-ext-eventlog#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atomist/automation-client-ext-eventlog.git"
+  },
+  "keywords": [
+    "atomist",
+    "automation"
+  ],
+  "bugs": {
+    "url": "https://github.com/atomist/automation-client-ext-eventlog/issues"
+  },
+  "dependencies": {
+    "json-stringify-safe": "^5.0.1",
+    "serialize-error": "^2.1.0"
+  },
+  "peerDependencies": {
+    "@atomist/automation-client": ">=0.18.0"
+  },
+  "devDependencies": {
+    "@atomist/automation-client": "0.18.0-20180724191657",
+    "@types/lodash": "^4.14.108",
+    "@types/mocha": "^2.2.48",
+    "@types/node": "^9.4.1",
+    "@types/power-assert": "^1.4.29",
+    "espower-typescript": "^8.1.3",
+    "mocha": "^4.1.0",
+    "npm-run-all": "^4.1.2",
+    "power-assert": "^1.4.4",
+    "rimraf": "^2.6.2",
+    "supervisor": "^0.12.0",
+    "ts-node": "7.0.0",
+    "tslint": "5.11.0",
+    "typedoc": "^0.11.1",
+    "typescript": "2.9.2",
+    "typescript-formatter": "7.2.2"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "npm-run-all lint compile test",
+    "clean": "npm-run-all clean:js clean:build",
+    "clean:benchmark": "rimraf isolate-*-v8.log",
+    "clean:build": "rimraf *-v8.log profile.txt build",
+    "clean:dist": "npm-run-all clean clean:npm",
+    "clean:js": "rimraf \"{src,test}/**/*.js\"",
+    "clean:npm": "rimraf node_modules",
+    "compile": "npm-run-all compile:ts",
+    "compile:ts": "tsc --project .",
+    "fmt": "tsfmt --replace",
+    "lint": "tslint --format verbose --project . --exclude \"{build,node_modules}/**\" \"**/*.ts\"",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "mocha --require espower-typescript/guess --exit \"test/{*.ts,!(api|benchmark|bitbucket-api)/**/*.ts}\"",
+    "test:one": "mocha --require espower-typescript/guess \"test/**/${TEST:-*.ts}\"",
+    "typedoc": "typedoc --mode modules --excludeExternals --out build/typedoc src",
+    "watch:compile": "tsc --project . --watch",
+    "watch": "supervisor --watch build --quiet --exec npm -- run start"
+  },
+  "engines": {
+    "node": "8.x.x",
+    "npm": "5.x.x"
+  }
+}

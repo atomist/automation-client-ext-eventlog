@@ -30,6 +30,7 @@ import {
 import {
     Destination,
     MessageOptions,
+    SlackDestination,
 } from "@atomist/automation-client/spi/message/MessageClient";
 import * as stringify from "json-stringify-safe";
 import * as serializeError from "serialize-error";
@@ -43,45 +44,92 @@ import {
 export class EventLogAutomationEventListener extends AutomationEventListenerSupport
     implements AutomationEventListener {
 
+    private logHandlerName: string;
+
+    constructor(configuration: Configuration) {
+        super();
+        this.logHandlerName = onLogMaker(configuration.name, configuration.version)().name;
+    }
+
     public commandStarting(payload: CommandInvocation,
                            ctx: HandlerContext) {
-        return this.sendEvent("command.start", (ctx as any).trigger, ctx);
+        return this.sendOperation(
+            "command.start",
+            payload.name,
+            "command",
+            "started",
+            ctx,
+            (ctx as any).trigger);
     }
 
     public commandSuccessful(payload: CommandInvocation,
                              ctx: HandlerContext,
                              result: HandlerResult): Promise<void> {
-        return this.sendOperation("command.success", "successful", ctx, result);
+        return this.sendOperation(
+            "command.success",
+            payload.name,
+            "command",
+            "success",
+            ctx,
+            result);
     }
 
     public commandFailed(payload: CommandInvocation,
                          ctx: HandlerContext,
                          err: any): Promise<void> {
-        return this.sendOperation("command.failed", "failed", ctx, err);
+        return this.sendOperation(
+            "command.failed",
+            payload.name,
+            "command",
+            "failed",
+            ctx,
+            err);
     }
 
     public eventStarting(payload: EventFired<any>,
                          ctx: HandlerContext) {
-        return this.sendEvent("event.start", (ctx as any).trigger, ctx);
+        return this.sendOperation(
+            "event.start",
+            payload.extensions.operationName,
+            "event",
+            "started",
+            ctx,
+            (ctx as any).trigger);
     }
 
     public eventSuccessful(payload: EventFired<any>,
                            ctx: HandlerContext,
                            result: HandlerResult[]): Promise<void> {
-        return this.sendOperation("event.success", "successful", ctx, result);
+        return this.sendOperation(
+            "event.success",
+            payload.extensions.operationName,
+            "event",
+            "success",
+            ctx,
+            result);
     }
 
     public eventFailed(payload: EventFired<any>,
                        ctx: HandlerContext,
                        err: any): Promise<void> {
-        return this.sendOperation("event.failed", "failed", ctx, err);
+        return this.sendOperation(
+            "event.failed",
+            payload.extensions.operationName,
+            "event",
+            "failed",
+            ctx,
+            err);
     }
 
     public messageSent(message: any,
                        destinations: Destination | Destination[],
                        options: MessageOptions,
                        ctx: HandlerContext): Promise<void> {
-        if (!message.timestamp && !message.category && !message.level && !message.message) {
+
+        const destinationsArray = Array.isArray(destinations) ? destinations : [ destinations ];
+
+        // Only send slack messages as custom events etc are already being logged in the backend
+        if (destinationsArray.some(d => d.userAgent === SlackDestination.SLACK_USER_AGENT)) {
             return this.sendEvent(
                 "message",
                 {
@@ -95,22 +143,31 @@ export class EventLogAutomationEventListener extends AutomationEventListenerSupp
     }
 
     private sendOperation(identifier: string,
+                          name: string,
+                          type: string,
                           status: string,
                           ctx: HandlerContext,
                           err?: any) {
         if (!ctx) {
-            return;
+            return Promise.resolve();
         }
 
+        // Don't log anything for the AtomistLog handler
+        if (name === this.logHandlerName) {
+            return Promise.resolve();
+        }
+        
         const data: any = {
-            level: status === "failed" ? "error" : "info",
+            name,
+            type,
+            status,
         };
 
         if (err) {
             if (status === "failed") {
                 data.stacktrace = serializeError(err);
             } else if (status === "successful") {
-                data.result = serializeError(err);
+                data.payload = serializeError(err);
             }
         }
 
@@ -153,11 +210,11 @@ export class EventLogAutomationEventListener extends AutomationEventListenerSupp
  */
 export function configureEventLog(...handlers: LogHandler[]): (config: Configuration) => Promise<Configuration> {
     return async config => {
-        config.listeners.push(new EventLogAutomationEventListener());
+        config.listeners.push(new EventLogAutomationEventListener(config));
 
         // Register the OnLog handler if we are getting some LogHandlers passed
         if (handlers && handlers.length > 0) {
-            config.events = [...(config.events || []), onLogMaker(config.name, config.version, handlers)];
+            config.events = [ ...(config.events || []), onLogMaker(config.name, config.version, ...handlers) ];
         }
 
         return config;

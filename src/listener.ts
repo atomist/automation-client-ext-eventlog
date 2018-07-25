@@ -156,7 +156,7 @@ export class EventLogAutomationEventListener extends AutomationEventListenerSupp
         if (name === this.logHandlerName) {
             return Promise.resolve();
         }
-        
+
         const data: any = {
             name,
             type,

@@ -57,7 +57,7 @@ export class EventLogAutomationEventListener extends AutomationEventListenerSupp
             "command.start",
             payload.name,
             "command",
-            "started",
+            "start",
             ctx,
             (ctx as any).trigger);
     }
@@ -78,10 +78,10 @@ export class EventLogAutomationEventListener extends AutomationEventListenerSupp
                          ctx: HandlerContext,
                          err: any): Promise<void> {
         return this.sendOperation(
-            "command.failed",
+            "command.failure",
             payload.name,
             "command",
-            "failed",
+            "failure",
             ctx,
             err);
     }
@@ -92,7 +92,7 @@ export class EventLogAutomationEventListener extends AutomationEventListenerSupp
             "event.start",
             payload.extensions.operationName,
             "event",
-            "started",
+            "start",
             ctx,
             (ctx as any).trigger);
     }
@@ -113,10 +113,10 @@ export class EventLogAutomationEventListener extends AutomationEventListenerSupp
                        ctx: HandlerContext,
                        err: any): Promise<void> {
         return this.sendOperation(
-            "event.failed",
+            "event.failure",
             payload.extensions.operationName,
             "event",
-            "failed",
+            "failure",
             ctx,
             err);
     }
@@ -133,7 +133,7 @@ export class EventLogAutomationEventListener extends AutomationEventListenerSupp
             return this.sendEvent(
                 "message",
                 {
-                    message,
+                    payload: message,
                     destinations,
                     options,
                 },
@@ -164,14 +164,14 @@ export class EventLogAutomationEventListener extends AutomationEventListenerSupp
         };
 
         if (err) {
-            if (status === "failed") {
+            if (status === "failure") {
                 data.stacktrace = serializeError(err);
-            } else if (status === "successful") {
-                data.payload = serializeError(err);
+            } else {
+                data.payload = err;
             }
         }
 
-        return this.log(identifier, data, ctx, status === "failed" ? "error" : undefined);
+        return this.log(identifier, data, ctx, status === "failure" ? "error" : undefined);
     }
 
     private sendEvent(identifier: string,

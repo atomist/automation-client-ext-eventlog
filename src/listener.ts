@@ -165,7 +165,9 @@ export class EventLogAutomationEventListener extends AutomationEventListenerSupp
 
         if (err) {
             if (status === "failure") {
-                data.stacktrace = serializeError(err);
+                data.error = serializeError(err);
+            } else if (status === "success") {
+                data.result = err;
             } else {
                 data.payload = err;
             }

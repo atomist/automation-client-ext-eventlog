@@ -47,6 +47,7 @@ export interface Subscription {
 }
 
 export interface AtomistLog {
+    team_id?: string | null;
     level?: string | null;
     category?: string | null;
     timestamp?: number | null;

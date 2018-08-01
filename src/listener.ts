@@ -188,6 +188,7 @@ export class EventLogAutomationEventListener extends AutomationEventListenerSupp
 
     private log(category: string, data: any, ctx: HandlerContext, level: string = "info") {
         const log: AtomistLog = {
+            team_id: ctx.workspaceId,
             timestamp: Date.now(),
             level,
             message: stringify(data, replacer),

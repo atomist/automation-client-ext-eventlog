@@ -1,6 +1,6 @@
 {
   "name": "@atomist/automation-client-ext-eventlog",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Extension for sending events into the AtomistLogs event stream",
   "author": "Atomist, Inc.",
   "license": "Apache-2.0",

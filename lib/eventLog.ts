@@ -83,8 +83,8 @@ export class OnLog implements HandleEvent<Subscription>, EventHandlerMetadata {
         this.subscription = subscription({
             subscription: LogSubscription,
             variables: {
-                name: eman,
-                version,
+                name: this.eman,
+                version: this.version,
             },
             inline: true,
         });

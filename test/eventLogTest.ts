@@ -21,7 +21,7 @@ import {
     AtomistLog,
     LogHandler,
     OnLog,
-} from "../src/eventLog";
+} from "../lib/eventLog";
 
 describe("eventLog", () => {
 

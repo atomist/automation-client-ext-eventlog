@@ -178,15 +178,15 @@ export class EventLogAutomationEventListener extends AutomationEventListenerSupp
 
     private sendEvent(identifier: string,
                       payload: any,
-                      ctx: HandlerContext) {
+                      ctx: HandlerContext): Promise<any> {
         if (!ctx) {
-            return;
+            return Promise.resolve();
         }
 
         return this.log(identifier, payload, ctx);
     }
 
-    private log(category: string, data: any, ctx: HandlerContext, level: string = "info") {
+    private log(category: string, data: any, ctx: HandlerContext, level: string = "info"): Promise<any> {
         const log: AtomistLog = {
             team_id: ctx.workspaceId,
             timestamp: Date.now(),

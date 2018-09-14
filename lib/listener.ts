@@ -223,3 +223,4 @@ export function configureEventLog(...handlers: LogHandler[]): (config: Configura
         return config;
     };
 }
+

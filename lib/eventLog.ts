@@ -15,16 +15,16 @@
  */
 
 import {
+    addressEvent,
     EventFired,
+    EventHandlerMetadata,
+    GraphQL,
     HandleEvent,
     HandlerContext,
     HandlerResult,
     logger,
     Success,
 } from "@atomist/automation-client";
-import { subscription } from "@atomist/automation-client/graph/graphQL";
-import { EventHandlerMetadata } from "@atomist/automation-client/metadata/automationMetadata";
-import { addressEvent } from "@atomist/automation-client/spi/message/MessageClient";
 
 // Subscription to retrieve all Log events for this automation client
 const LogSubscription = `subscription OnLog($name: String!, $version: String!) {
@@ -77,10 +77,10 @@ export class OnLog implements HandleEvent<Subscription>, EventHandlerMetadata {
     public subscriptionName: string = OnLogName;
     public subscription: string;
 
-    constructor(private eman: string,
-                private version: string,
-                private logHandlers: LogHandler[] = [ConsoleLogHandler]) {
-        this.subscription = subscription({
+    constructor(private readonly eman: string,
+                private readonly version: string,
+                private readonly logHandlers: LogHandler[] = [ConsoleLogHandler]) {
+        this.subscription = GraphQL.subscription({
             subscription: LogSubscription,
             variables: {
                 name: this.eman,

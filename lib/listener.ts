@@ -16,22 +16,18 @@
 
 import {
     AutomationContextAware,
+    AutomationEventListener,
+    AutomationEventListenerSupport,
+    CommandInvocation,
     Configuration,
+    Destination,
     EventFired,
     HandlerContext,
     HandlerResult,
-} from "@atomist/automation-client";
-import { CommandInvocation } from "@atomist/automation-client/internal/invoker/Payload";
-import { replacer } from "@atomist/automation-client/internal/transport/AbstractRequestProcessor";
-import {
-    AutomationEventListener,
-    AutomationEventListenerSupport,
-} from "@atomist/automation-client/server/AutomationEventListener";
-import {
-    Destination,
     MessageOptions,
+    replacer,
     SlackDestination,
-} from "@atomist/automation-client/spi/message/MessageClient";
+} from "@atomist/automation-client";
 import * as stringify from "json-stringify-safe";
 import * as serializeError from "serialize-error";
 import {
@@ -44,7 +40,7 @@ import {
 export class EventLogAutomationEventListener extends AutomationEventListenerSupport
     implements AutomationEventListener {
 
-    private logHandlerName: string;
+    private readonly logHandlerName: string;
 
     constructor(configuration: Configuration) {
         super();
@@ -223,4 +219,3 @@ export function configureEventLog(...handlers: LogHandler[]): (config: Configura
         return config;
     };
 }
-

@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import { guid } from "@atomist/automation-client/internal/util/string";
-import "mocha";
+import { guid } from "@atomist/automation-client";
 import * as assert from "power-assert";
 import {
     AtomistLog,

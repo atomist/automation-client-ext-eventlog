@@ -17,14 +17,14 @@
 import {
     addressEvent,
     EventFired,
-    EventHandlerMetadata,
     GraphQL,
-    HandleEvent,
     HandlerContext,
     HandlerResult,
     logger,
     Success,
 } from "@atomist/automation-client";
+import { HandleEvent } from "@atomist/automation-client/lib/HandleEvent";
+import { EventHandlerMetadata } from "@atomist/automation-client/lib/metadata/automationMetadata";
 
 // Subscription to retrieve all Log events for this automation client
 const LogSubscription = `subscription OnLog($name: String!, $version: String!) {

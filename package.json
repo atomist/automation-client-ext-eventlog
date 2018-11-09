@@ -1,6 +1,6 @@
 {
   "name": "@atomist/automation-client-ext-eventlog",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Extension for sending events into the AtomistLogs event stream",
   "author": {
     "name": "Atomist",
@@ -24,27 +24,27 @@
     "@types/json-stringify-safe": "^5.0.0",
     "@types/serialize-error": "^2.1.0",
     "json-stringify-safe": "^5.0.1",
-    "serialize-error": "^2.1.0"
+    "serialize-error": "^3.0.0"
   },
   "peerDependencies": {
-    "@atomist/automation-client": "*"
+    "@atomist/automation-client": ">=1.0.1"
   },
   "devDependencies": {
-    "@atomist/automation-client": "1.0.0-RC.1",
-    "@types/lodash": "^4.14.108",
-    "@types/mocha": "^2.2.48",
-    "@types/node": "^9.4.1",
+    "@atomist/automation-client": "1.0.1",
+    "@types/lodash": "^4.14.118",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.3",
     "@types/power-assert": "^1.4.29",
-    "espower-typescript": "^8.1.3",
-    "mocha": "^4.1.0",
+    "espower-typescript": "^9.0.1",
+    "mocha": "^5.2.0",
     "npm-run-all": "^4.1.2",
     "power-assert": "^1.4.4",
     "rimraf": "^2.6.2",
     "supervisor": "^0.12.0",
-    "ts-node": "7.0.0",
+    "ts-node": "7.0.1",
     "tslint": "5.11.0",
-    "typedoc": "^0.11.1",
-    "typescript": "2.9.2"
+    "typedoc": "^0.13.0",
+    "typescript": "^3.1.6"
   },
   "directories": {
     "test": "test"

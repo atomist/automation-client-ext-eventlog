@@ -48,7 +48,7 @@ export class EventLogAutomationEventListener extends AutomationEventListenerSupp
     }
 
     public commandStarting(payload: CommandInvocation,
-                           ctx: HandlerContext) {
+                           ctx: HandlerContext): Promise<void> {
         return this.sendOperation(
             "command.start",
             payload.name,
@@ -83,7 +83,7 @@ export class EventLogAutomationEventListener extends AutomationEventListenerSupp
     }
 
     public eventStarting(payload: EventFired<any>,
-                         ctx: HandlerContext) {
+                         ctx: HandlerContext): Promise<void> {
         return this.sendOperation(
             "event.start",
             payload.extensions.operationName,
@@ -143,7 +143,7 @@ export class EventLogAutomationEventListener extends AutomationEventListenerSupp
                           type: string,
                           status: string,
                           ctx: HandlerContext,
-                          err?: any) {
+                          err?: any): Promise<any> {
         if (!ctx) {
             return Promise.resolve();
         }

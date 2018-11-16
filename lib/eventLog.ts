@@ -110,7 +110,7 @@ export class OnLog implements HandleEvent<Subscription>, EventHandlerMetadata {
  */
 export function onLogMaker(name: string,
                            version: string,
-                           ...logHandlers: LogHandler[]) {
+                           ...logHandlers: LogHandler[]): any {
     return () => new OnLog(name, version, logHandlers);
 }
 

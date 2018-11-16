@@ -47,7 +47,7 @@ describe("eventLog", () => {
             extensions: {
                 operationName: "OnLog",
             },
-        }, null);
+        }, undefined);
 
         assert.equal(logEvent.level, "info");
         assert.equal(logEvent.message, "this is a test message");

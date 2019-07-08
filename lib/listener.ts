@@ -27,7 +27,7 @@ import {
     MessageOptions,
     SlackDestination,
 } from "@atomist/automation-client";
-import { replacer } from "@atomist/automation-client/lib/internal/transport/AbstractRequestProcessor";
+import { replacer } from "@atomist/automation-client/lib/internal/util/string";
 import * as stringify from "json-stringify-safe";
 import * as serializeError from "serialize-error";
 import {

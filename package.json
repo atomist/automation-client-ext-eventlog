@@ -30,7 +30,7 @@
     "@atomist/automation-client": ">=1.0.1"
   },
   "devDependencies": {
-    "@atomist/automation-client": "^1.6.1",
+    "@atomist/automation-client": "1.6.1",
     "@types/lodash": "^4.14.118",
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.12.3",
